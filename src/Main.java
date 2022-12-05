@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 //TODO: <time> (start stopwatch at the beginning of running and stop at end, sout time)
 //TODO openInBrowser<https://www.example.com> (opens the https address in the standard browser) https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
 public class Main {
+    static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
     static boolean debug = false;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
@@ -207,7 +208,7 @@ public class Main {
             if(debug){
                 System.out.println("DEBUG: openInBrowser detected");
             }
-            int index = code.indexOf("print", i);
+            int index = code.indexOf("openInBrowser", i);
             String toPrint = "";
             int tempIndex = index + 12;
             toPrint="";
@@ -218,7 +219,43 @@ public class Main {
 
             }
             toPrint = toPrint.substring(1)  ;
-            System.out.print(toPrint.replaceAll("@nl", "\n"));
+            if(debug)
+                System.out.print("DEBUG: trying to open "+toPrint.replaceAll("@nl", "\n")+ " in standard webbrowser");
+            if (os.indexOf("win") >= 0){//if on windows
+                Runtime rt = Runtime.getRuntime();
+                try{
+                    rt.exec("rundll32 url.dll,FileProtocolHandler " + toPrint);
+                }catch (Exception e){
+                    System.out.println("ERROR: " + e);
+                }
+
+            }else if(os.indexOf("mac") >= 0){//if on mac
+                Runtime rt = Runtime.getRuntime();
+                try{
+                    rt.exec("open " + toPrint);
+                }catch (Exception e){
+                    System.out.println("ERROR: " + e);
+                }
+
+            }else if (os.indexOf("nix") >=0 || os.indexOf("nux") >=0){
+                Runtime rt = Runtime.getRuntime();
+                String[] browsers = { "google-chrome", "firefox", "mozilla", "epiphany", "konqueror",
+                        "netscape", "opera", "links", "lynx" };
+
+                StringBuffer cmd = new StringBuffer();
+                for (int ind = 0; ind < browsers.length; ind++)
+                    if(ind == 0)
+                        cmd.append(String.format(    "%s \"%s\"", browsers[ind], toPrint));
+                    else
+                        cmd.append(String.format(" || %s \"%s\"", browsers[ind], toPrint));
+                // If the first didn't work, try the next browser and so on
+                try{
+                    rt.exec(new String[] { "sh", "-c", cmd.toString() });
+                }catch (Exception e){
+                    System.out.println("ERROR: " + e);
+                }
+
+            }
         }
     }
     static void addCheck(int i){
