@@ -35,6 +35,7 @@ public class Main {
                 defInt(i);
                 addCheck(i);
                 foreverCheck(i);
+                openInBrowserCheck(i);
                 if (debug)
                     System.out.println();
 
@@ -192,10 +193,29 @@ public class Main {
                 }
 
             }
-    }}
+    }} //basically finished (could make infinite)
     static void helpCheck(int i){
         if(code.indexOf("help", i) == i){
 
+        }
+    }
+    static void openInBrowserCheck(int i){
+        if(code.indexOf("openInBrowser<", i) == i){
+            if(debug){
+                System.out.println("DEBUG: openInBrowser detected");
+            }
+            int index = code.indexOf("print", i);
+            String toPrint = "";
+            int tempIndex = index + 12;
+            toPrint="";
+            while (code.charAt(tempIndex+1) != '>'){
+
+                tempIndex++;
+                toPrint += code.charAt(tempIndex);
+
+            }
+            toPrint = toPrint.substring(1)  ;
+            System.out.print(toPrint.replaceAll("@nl", "\n"));
         }
     }
     static void addCheck(int i){
