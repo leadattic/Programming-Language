@@ -1,3 +1,3 @@
 # Programming-Language
-A programming language i have decided to make, it is really dumb but i just wanted to make something
+A programming language I have decided to make, it is really dumb, but I just wanted to make something
 
