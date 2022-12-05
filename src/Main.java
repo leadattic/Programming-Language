@@ -6,14 +6,20 @@ import java.util.concurrent.TimeUnit;
 //TODO use<> command (basically like import)
 //TODO help<> command
 public class Main {
+
+
+
+
+    static boolean usingTime;
     static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
     static boolean debug = false;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
+    static long startTime = System.currentTimeMillis();
     public static void main(String[] args) {
 
         if(debug)
-            System.out.println("Program started");
+            System.out.println("DEBUG: Program started");
         try{
             FileReader flRead = new FileReader(args[0]);
             int codeInt = flRead.read();
@@ -29,8 +35,9 @@ public class Main {
             System.out.println("IOexception");
         }
 
-
+            long fileReadDone = System.currentTimeMillis();
             for (int i = 0; i < code.length(); i++) {
+                useCheck(i);
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
                 if (debug)
@@ -40,13 +47,15 @@ public class Main {
                 checkPrintInt(i);
                 defInt(i);
                 addCheck(i);
-                helpCheck();
+                helpCheck(i);
                 foreverCheck(i);
                 openInBrowserCheck(i);
-                useCheck(i);
+
 
 
             }
+            if(usingTime)
+                System.out.println("Took " + (System.currentTimeMillis() - fileReadDone)+"ms from when the file had been read to run.");
         }
 
     static void checkPrint(int i){
@@ -282,8 +291,12 @@ public class Main {
                 toPrint += code.charAt(tempIndex);
 
             }
-            toPrint = toPrint.substring(1)  ;
-            System.out.println(toPrint);
+            toPrint = toPrint.substring(1);
+            if(toPrint.equals("time")){
+                usingTime = true;
+                if(debug)
+                    System.out.println("DEBUG: usingTime set to true");
+            }
 
     }}
     static void addCheck(int i){

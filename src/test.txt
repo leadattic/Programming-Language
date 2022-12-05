@@ -1,1 +1,2 @@
-use<hiiiiii>
+use<time>
+print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>
