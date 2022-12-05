@@ -10,7 +10,8 @@ public class Main {
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
     public static void main(String[] args) {
 
-
+        if(debug)
+            System.out.println("Program started");
         try{
             FileReader flRead = new FileReader(args[0]);
             int codeInt = flRead.read();
@@ -18,7 +19,8 @@ public class Main {
             while(codeInt != -1){
                 code += (char) codeInt;
                 codeInt = flRead.read();
-
+                if(debug)
+                    System.out.println(code);
             }
             flRead.close();
         } catch (IOException e) {
@@ -29,6 +31,8 @@ public class Main {
             for (int i = 0; i < code.length(); i++) {
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
+                if (debug)
+                    System.out.println();
                 checkPrint(i);
                 checkPrintLine(i);
                 checkPrintInt(i);
@@ -36,8 +40,7 @@ public class Main {
                 addCheck(i);
                 foreverCheck(i);
                 openInBrowserCheck(i);
-                if (debug)
-                    System.out.println();
+
 
             }
         }
@@ -89,7 +92,7 @@ public class Main {
 
             }
             toPrint = toPrint.substring(1);
-            System.out.println("\n"+toPrint.replaceAll("@nl", "\n"));
+            System.out.println(toPrint.replaceAll("@nl", "\n"));
         }
     }
     static void checkPrintInt(int i){
