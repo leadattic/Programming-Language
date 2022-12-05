@@ -1,20 +1,22 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 //TODO use<> command (basically like import)
 //TODO help<> command
+//TODO yesNo<ifYes:ifNo>
 public class Main {
 
 
 
-
+    static Scanner sc;
     static boolean usingTime;
+    static boolean ynInput;
     static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
     static boolean debug = false;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
-    static long startTime = System.currentTimeMillis();
     public static void main(String[] args) {
 
         if(debug)
@@ -31,7 +33,7 @@ public class Main {
             }
             flRead.close();
         } catch (IOException e) {
-            System.out.println("IOexception");
+            System.out.println("Ioexception");
         }
 
             long fileReadDone = System.currentTimeMillis();
@@ -170,7 +172,6 @@ public class Main {
                     System.out.println("DEBUG: Value of "+varName+" = "+intVariables.get(varName));
             }
     }
-
     static void foreverCheck(int i) {
         if(code.indexOf("forever<", i) == i){
             if(debug)
@@ -189,7 +190,7 @@ public class Main {
                 toPrint += code.charAt(tempIndex);
 
             }
-            long whileCounter = -9223372036854775807l;
+            long whileCounter = -9223372036854775807L;
             while (whileCounter < 9223372036854775807L){
                 whileCounter++;
                 if (debug)
@@ -213,7 +214,7 @@ public class Main {
         if(code.indexOf("help<>", i) == i){
             System.out.println("Help coming soon");
         }
-    }
+    }//
     static void openInBrowserCheck(int i){
         if(code.indexOf("openInBrowser<", i) == i){
             if(debug){
@@ -232,7 +233,7 @@ public class Main {
             toPrint = toPrint.substring(1)  ;
             if(debug)
                 System.out.print("DEBUG: trying to open "+toPrint.replaceAll("@nl", "\n")+ " in standard webbrowser");
-            if (os.indexOf("win") >= 0){//if on windows
+            if (os.indexOf("win") >= 0){//if on Windows
                 Runtime rt = Runtime.getRuntime();
                 try{
                     rt.exec("rundll32 url.dll,FileProtocolHandler " + toPrint);
@@ -240,7 +241,7 @@ public class Main {
                     System.out.println("ERROR: " + e);
                 }
 
-            }else if(os.indexOf("mac") >= 0){//if on mac
+            }else if(os.indexOf("mac") >= 0){//if on Mac
                 Runtime rt = Runtime.getRuntime();
                 try{
                     rt.exec("open " + toPrint);
@@ -295,6 +296,13 @@ public class Main {
                 usingTime = true;
                 if(debug)
                     System.out.println("DEBUG: usingTime set to true");
+            }else if(toPrint.equals("yn_input")){
+                sc = new Scanner(System.in);
+                ynInput = true;
+            }
+
+            else {
+                System.out.println("ERROR: use argument is not a valid option");
             }
 
     }}
