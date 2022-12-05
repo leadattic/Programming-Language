@@ -1,2 +1,1 @@
-println<hi>
-openInBrowser<https://stackoverflow.com>
+use<hiiiiii>

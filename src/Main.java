@@ -2,7 +2,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-//TODO: <time> (start stopwatch at the beginning of running and stop at end, sout time)
+//TODO <time> (start stopwatch at the beginning of running and stop at end, sout time)
+//TODO use<> command (basically like import)
+//TODO help<> command
 public class Main {
     static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
@@ -38,8 +40,10 @@ public class Main {
                 checkPrintInt(i);
                 defInt(i);
                 addCheck(i);
+                helpCheck();
                 foreverCheck(i);
                 openInBrowserCheck(i);
+                useCheck(i);
 
 
             }
@@ -198,8 +202,8 @@ public class Main {
             }
     }} //basically finished (could make infinite)
     static void helpCheck(int i){
-        if(code.indexOf("help", i) == i){
-
+        if(code.indexOf("help<>", i) == i){
+            System.out.println("Help coming soon");
         }
     }
     static void openInBrowserCheck(int i){
@@ -257,6 +261,31 @@ public class Main {
             }
         }
     }
+    static void useCheck(int i){
+
+        if(code.indexOf("use<", i) == i){
+            if(debug){
+                System.out.println("DEBUG: print detected");
+            }
+
+
+            int index = code.indexOf("use", i);
+
+
+
+            String toPrint = "";
+            int tempIndex = index + 2;
+            toPrint="";
+            while (code.charAt(tempIndex+1) != '>'){
+
+                tempIndex++;
+                toPrint += code.charAt(tempIndex);
+
+            }
+            toPrint = toPrint.substring(1)  ;
+            System.out.println(toPrint);
+
+    }}
     static void addCheck(int i){
         if(code.indexOf("add<", i) == i){
             int index = code.indexOf("add<", i);
