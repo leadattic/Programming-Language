@@ -2,7 +2,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
+//TODO: <time> (start stopwatch at the beginning of running and stop at end, sout time)
+//TODO openInBrowser<https://www.example.com> (opens the https address in the standard browser) https://stackoverflow.com/questions/5226212/how-to-open-the-default-webbrowser-using-java
 public class Main {
     static String code = "";
     static boolean debug = false;
