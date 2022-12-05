@@ -2,7 +2,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-//TODO <time> (start stopwatch at the beginning of running and stop at end, sout time)
 //TODO use<> command (basically like import)
 //TODO help<> command
 public class Main {
