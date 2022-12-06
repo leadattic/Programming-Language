@@ -1,2 +1,1 @@
-use<time>
-print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>print<hi>
+println<print<fuck off@>>

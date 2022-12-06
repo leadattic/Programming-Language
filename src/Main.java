@@ -35,22 +35,28 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Ioexception");
         }
-
+            code = code.replaceAll("@>", "ޝ");
             long fileReadDone = System.currentTimeMillis();
             for (int i = 0; i < code.length(); i++) {
-                useCheck(i);
+
+                useCheck(0);
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
                 if (debug)
                     System.out.println();
-                checkPrint(i);
-                checkPrintLine(i);
-                checkPrintInt(i);
-                defInt(i);
-                addCheck(i);
-                helpCheck(i);
-                foreverCheck(i);
-                openInBrowserCheck(i);
+                checkPrint(0);
+                checkPrintLine(0);
+                checkPrintInt(0);
+                defInt(0);
+                addCheck(0);
+                helpCheck(0);
+                foreverCheck(0);
+                openInBrowserCheck(0);
+
+                //Clear <>s
+                clearArrows(0);
+                //delete character
+                code = code.substring(1);
 
 
 
@@ -59,6 +65,17 @@ public class Main {
                 System.out.println("Took " + (System.currentTimeMillis() - fileReadDone)+"ms from when the file had been read to run.");
         }
 
+    static void clearArrows(int i){
+        if(code.indexOf("<", i) == i) {
+            int startIndex = code.indexOf("<", i);
+            int endIndex = code.indexOf(">", i);
+            String replacement = "";
+            String toBeReplaced = code.substring(startIndex+1, endIndex);
+
+            code = code.replaceFirst(toBeReplaced, "");
+        }
+
+    }
     static void checkPrint(int i){
         if(code.indexOf("print<", i) == i){
             if(debug){
@@ -81,7 +98,7 @@ public class Main {
 
                 }
                 toPrint = toPrint.substring(1)  ;
-                System.out.print(toPrint.replaceAll("@nl", "\n"));
+                System.out.print(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
             }
         }
     static void checkPrintLine(int i){
@@ -106,7 +123,7 @@ public class Main {
 
             }
             toPrint = toPrint.substring(1);
-            System.out.println(toPrint.replaceAll("@nl", "\n"));
+            System.out.println(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
         }
     }
     static void checkPrintInt(int i){
@@ -273,9 +290,6 @@ public class Main {
     static void useCheck(int i){
 
         if(code.indexOf("use<", i) == i){
-            if(debug){
-                System.out.println("DEBUG: print detected");
-            }
 
 
             int index = code.indexOf("use", i);
@@ -291,7 +305,7 @@ public class Main {
                 toPrint += code.charAt(tempIndex);
 
             }
-            toPrint = toPrint.substring(1);
+            toPrint = toPrint.substring(1).replaceAll("ޝ", ">");
             if(toPrint.equals("time")){
                 usingTime = true;
                 if(debug)
