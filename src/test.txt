@@ -1,1 +1,1 @@
-println<print<fuck off@>>
+use<yn_input>yesNo<print<hi>:print<bye>>

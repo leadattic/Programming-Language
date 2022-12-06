@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ public class Main {
 
 
 
-    static Scanner sc;
+    static Scanner sc = new Scanner(System.in);
     static boolean usingTime;
     static boolean ynInput;
     static String os = System.getProperty("os.name").toLowerCase();
@@ -19,7 +20,6 @@ public class Main {
     static boolean debug = false;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
     public static void main(String[] args) {
-
         if(debug)
             System.out.println("DEBUG: Program started");
         try{
@@ -39,7 +39,8 @@ public class Main {
             code = code.replaceAll("@>", "ޝ");
             long fileReadDone = System.currentTimeMillis();
             for (int i = 0; i < code.length(); i++) {
-
+                //System.out.println(code);
+                //do not use useCheck in infinite loop
                 useCheck(0);
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
@@ -53,6 +54,7 @@ public class Main {
                 helpCheck(0);
                 foreverCheck(0);
                 openInBrowserCheck(0);
+                ynInputCheck(0);
 
                 //Clear <>s
                 clearArrows(0);
@@ -70,6 +72,14 @@ public class Main {
         if(code.indexOf("<", i) == i) {
             int startIndex = code.indexOf("<", i);
             int endIndex = code.indexOf(">", i);
+            String replacement = "";
+            String toBeReplaced = code.substring(startIndex+1, endIndex);
+
+            code = code.replaceFirst(toBeReplaced, "");
+        }
+        if(code.indexOf(">:", i) == i) {
+            int startIndex = code.indexOf(">:", i);
+            int endIndex = code.indexOf(">", i+1);
             String replacement = "";
             String toBeReplaced = code.substring(startIndex+1, endIndex);
 
@@ -379,6 +389,77 @@ public class Main {
 
         }
     }
+    static void ynInputCheck(int i) {
+        if (code.indexOf("yesNo<", i) == i) {
+            if(debug)
+                System.out.println("DEBUG: yesNo<> detected");
 
-}
+            int index = code.indexOf("yesNo", i);
+
+
+            //read code
+            String ifYes = "";
+            int tempIndex = index + 5;
+            String ifNo = "";
+
+            while (code.charAt(tempIndex + 1) != ':') {
+
+                tempIndex++;
+                ifYes += code.charAt(tempIndex);
+
+            }
+            while (code.charAt(tempIndex + 1) != '>') {
+                tempIndex++;
+                ifNo += code.charAt(tempIndex);
+                ifNo = ifNo.replaceFirst(":", "");
+            }
+            ifNo = ifNo+ ">";
+            //System.out.println(ifYes + ifNo);
+            //get user input
+            String choise = sc.nextLine();
+            if (choise.equals("Y") || choise.equals("y") || choise.equals("yes") || choise.equals("Yes") || choise.equals("YEs") || choise.equals("YES") || choise.equals("yEs") || choise.equals("yES") || choise.equals("yeS")) {
+                for (int ind = 0; ind < ifYes.length()+5; ind++) {
+                    useCheck(0);
+                    if (debug)
+                        System.out.println("DEBUG: character: " + i);
+                    if (debug)
+                        System.out.println();
+                    checkPrint(0);
+                    checkPrintLine(0);
+                    checkPrintInt(0);
+                    defInt(0);
+                    addCheck(0);
+                    helpCheck(0);
+                    foreverCheck(0);
+                    openInBrowserCheck(0);
+
+                    //delete character
+                    code = code.substring(1);
+
+
+
+                        //run ifNot
+                    }
+                }
+         else if(choise.equals("n") || choise.equals("N")|| choise.equals("no")|| choise.equals("NO")|| choise.equals("nO")){
+        code = code.replaceFirst(ifYes, "");
+        for (int ind = 0; ind < ifYes.length()+6; ind++) {
+            useCheck(0);
+            if (debug)
+                System.out.println("DEBUG: character: " + i);
+            if (debug)
+                System.out.println();
+            checkPrint(0);
+            checkPrintLine(0);
+            checkPrintInt(0);
+            defInt(0);
+            addCheck(0);
+            helpCheck(0);
+            foreverCheck(0);
+            openInBrowserCheck(0);
+
+            //delete character
+            code = code.substring(1);
+        }
+}}}}
 
