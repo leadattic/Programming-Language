@@ -1,1 +1,1 @@
-use<yn_input>yesNo<print<hi>:print<bye>>
+func<hi:println<hi>>

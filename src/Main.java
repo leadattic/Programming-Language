@@ -6,8 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 //TODO use<> command (basically like import)
 //TODO help<> command
-//TODO yesNo<ifYes:ifNo>
-//
+//TODO functions ( do<>)
 public class Main {
 
 
@@ -17,8 +16,9 @@ public class Main {
     static boolean ynInput;
     static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
-    static boolean debug = false;
+    static boolean debug = true;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
+    static HashMap<String, String> functions = new HashMap<String, String>();
     public static void main(String[] args) {
         if(debug)
             System.out.println("DEBUG: Program started");
@@ -38,6 +38,7 @@ public class Main {
         }
             code = code.replaceAll("@>", "ޝ");
             long fileReadDone = System.currentTimeMillis();
+
             for (int i = 0; i < code.length(); i++) {
                 //System.out.println(code);
                 //do not use useCheck in infinite loop
@@ -55,7 +56,7 @@ public class Main {
                 foreverCheck(0);
                 openInBrowserCheck(0);
                 ynInputCheck(0);
-
+                funcCheck(0);
                 //Clear <>s
                 clearArrows(0);
                 //delete character
@@ -461,5 +462,30 @@ public class Main {
             //delete character
             code = code.substring(1);
         }
-}}}}
+}}}
+    static void funcCheck(int i){
+        if (code.indexOf("func<", i) == i) {
+            System.out.println("func");
+            int index = code.indexOf("func", i);
+            String name = "";
+            int tempIndex = index + 4;
+            String execCode =  "";
+
+            while (code.charAt(tempIndex + 1) != ':') {
+
+                tempIndex++;
+                name += code.charAt(tempIndex);
+
+            }
+            while (code.charAt(tempIndex) != '>') {
+                tempIndex++;
+                execCode += code.charAt(tempIndex);
+
+            }
+            execCode = execCode.replaceFirst(":", "");
+            functions.put(name, execCode);
+        }
+    }
+
+}
 
