@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 //TODO use<> command (basically like import)
 //TODO help<> command
-//TODO functions (solve func<> issues)
 public class Main {
 
 
@@ -519,7 +518,7 @@ public class Main {
 
             }
             toPrint = toPrint.substring(1);
-            String codeToUse = functions.get(toPrint);
+            String codeToUse = functions.get(toPrint).replaceAll("ޝ", ">");
             int oldLength = code.length();
             for (int ind = 0; i < oldLength; i++) {
             useCheck(0, codeToUse);

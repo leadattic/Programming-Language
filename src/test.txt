@@ -1,1 +1,1 @@
-func<hi:print<mom>>do<hi>
+println<print<yo@> says "yo">

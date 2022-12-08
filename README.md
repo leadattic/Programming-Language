@@ -1,3 +1,3 @@
 # Programming-Language
-A programming language I have decided to make, it is really dumb, but I just wanted to make something
+There is no name yet :( Wanna suggest one? Suggest it [here](https://github.com/leadattic/Programming-Language/issues/4)\
 
