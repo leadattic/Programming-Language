@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 //TODO use<> command (basically like import)
 //TODO help<> command
-//TODO functions ( do<>)
+//TODO functions (solve func<> issues)
 public class Main {
 
 
@@ -38,15 +38,18 @@ public class Main {
         }
             code = code.replaceAll("@>", "ޝ");
             long fileReadDone = System.currentTimeMillis();
-
-            for (int i = 0; i < code.length(); i++) {
+            int oldLen = code.length();
+            for (int i = 0; i < oldLen; i++) {
                 //System.out.println(insertedCode);
                 //do not use useCheck in infinite loop
                 useCheck(0, code);
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
-                if (debug)
+                if (debug){
+                    System.out.println("DEBUG: "+code);
                     System.out.println();
+                }
+
                 checkPrint(0, code);
                 checkPrintLine(0, code);
                 checkPrintInt(0, code);
@@ -503,7 +506,6 @@ public class Main {
     }
     static void doCheck(int i, String insertedCode){
         if(insertedCode.indexOf("do<", i) == i){
-            System.out.println("do detected");
 
             int index = insertedCode.indexOf("do", i);
             
@@ -518,8 +520,8 @@ public class Main {
             }
             toPrint = toPrint.substring(1);
             String codeToUse = functions.get(toPrint);
-            System.out.println(codeToUse);
-            for (int ind = 0; i < codeToUse.length(); i++) {
+            int oldLength = code.length();
+            for (int ind = 0; i < oldLength; i++) {
             useCheck(0, codeToUse);
             if (debug)
                 System.out.println("DEBUG: character: " + i);
