@@ -1,1 +1,2 @@
-print<new system works>
+do<hi>
+func<hi:>

@@ -16,7 +16,7 @@ public class Main {
     static boolean ynInput;
     static String os = System.getProperty("os.name").toLowerCase();
     static String code = "";
-    static boolean debug = true;
+    static boolean debug = false;
     static HashMap<String, Integer> intVariables = new HashMap<String, Integer>();
     static HashMap<String, String> functions = new HashMap<String, String>();
     public static void main(String[] args) {
@@ -57,6 +57,7 @@ public class Main {
                 openInBrowserCheck(0, code);
                 ynInputCheck(0, code);
                 funcCheck(0, code);
+                doCheck(0, code);
                 //Clear <>s
                 clearArrows(0, code);
                 //delete character
@@ -86,6 +87,15 @@ public class Main {
 
             insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
         }
+        if(insertedCode.indexOf(":", i) == i) {
+            int startIndex = insertedCode.indexOf(":", i);
+            int endIndex = insertedCode.indexOf(">", i+1);
+            String replacement = "";
+            String toBeReplaced = insertedCode.substring(startIndex+1, endIndex);
+
+            insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
+        }
+
 
     }
     static void checkPrint(int i, String insertedCode){
@@ -470,7 +480,7 @@ public class Main {
 }}}
     static void funcCheck(int i, String insertedCode){
         if (insertedCode.indexOf("func<", i) == i) {
-            System.out.println("func");
+
             int index = insertedCode.indexOf("func", i);
             String name = "";
             int tempIndex = index + 4;
@@ -490,6 +500,45 @@ public class Main {
             execinsertedCode = execinsertedCode.replaceFirst(":", "");
             functions.put(name, execinsertedCode);
         }
+    }
+    static void doCheck(int i, String insertedCode){
+        if(insertedCode.indexOf("do<", i) == i){
+            System.out.println("do detected");
+
+            int index = insertedCode.indexOf("do", i);
+            
+            String toPrint = "";
+            int tempIndex = index + 1;
+            toPrint="";
+            while (insertedCode.charAt(tempIndex+1) != '>'){
+
+                tempIndex++;
+                toPrint += insertedCode.charAt(tempIndex);
+
+            }
+            toPrint = toPrint.substring(1);
+            String codeToUse = functions.get(toPrint);
+            System.out.println(codeToUse);
+            codeToUse="print<DEBUG: test>";
+            for (int ind = 0; i < codeToUse.length(); i++) {
+            useCheck(0, codeToUse);
+            if (debug)
+                System.out.println("DEBUG: character: " + i);
+            if (debug)
+                System.out.println();
+            checkPrint(0, codeToUse);
+            checkPrintLine(0, codeToUse);
+            checkPrintInt(0, codeToUse);
+            defInt(0, codeToUse);
+            addCheck(0, codeToUse);
+            helpCheck(0, codeToUse);
+            foreverCheck(0, codeToUse);
+            openInBrowserCheck(0, codeToUse);
+            doCheck(0, codeToUse);
+            //delete character
+            codeToUse = codeToUse.substring(1);
+            
+        }}
     }
 
 }
