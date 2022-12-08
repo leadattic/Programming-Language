@@ -24,11 +24,11 @@ public class Main {
             System.out.println("DEBUG: Program started");
         try{
             FileReader flRead = new FileReader(args[0]);
-            int codeInt = flRead.read();
+            int insertedCodeInt = flRead.read();
 
-            while(codeInt != -1){
-                code += (char) codeInt;
-                codeInt = flRead.read();
+            while(insertedCodeInt != -1){
+                code += (char) insertedCodeInt;
+                insertedCodeInt = flRead.read();
                 if(debug)
                     System.out.println(code);
             }
@@ -40,25 +40,25 @@ public class Main {
             long fileReadDone = System.currentTimeMillis();
 
             for (int i = 0; i < code.length(); i++) {
-                //System.out.println(code);
+                //System.out.println(insertedCode);
                 //do not use useCheck in infinite loop
-                useCheck(0);
+                useCheck(0, code);
                 if (debug)
                     System.out.println("DEBUG: character: " + i);
                 if (debug)
                     System.out.println();
-                checkPrint(0);
-                checkPrintLine(0);
-                checkPrintInt(0);
-                defInt(0);
-                addCheck(0);
-                helpCheck(0);
-                foreverCheck(0);
-                openInBrowserCheck(0);
-                ynInputCheck(0);
-                funcCheck(0);
+                checkPrint(0, code);
+                checkPrintLine(0, code);
+                checkPrintInt(0, code);
+                defInt(0, code);
+                addCheck(0, code);
+                helpCheck(0, code);
+                foreverCheck(0, code);
+                openInBrowserCheck(0, code);
+                ynInputCheck(0, code);
+                funcCheck(0, code);
                 //Clear <>s
-                clearArrows(0);
+                clearArrows(0, code);
                 //delete character
                 code = code.substring(1);
 
@@ -69,33 +69,33 @@ public class Main {
                 System.out.println("Took " + (System.currentTimeMillis() - fileReadDone)+"ms from when the file had been read to run.");
         }
 
-    static void clearArrows(int i){
-        if(code.indexOf("<", i) == i) {
-            int startIndex = code.indexOf("<", i);
-            int endIndex = code.indexOf(">", i);
+    static void clearArrows(int i, String insertedCode){
+        if(insertedCode.indexOf("<", i) == i) {
+            int startIndex = insertedCode.indexOf("<", i);
+            int endIndex = insertedCode.indexOf(">", i);
             String replacement = "";
-            String toBeReplaced = code.substring(startIndex+1, endIndex);
+            String toBeReplaced = insertedCode.substring(startIndex+1, endIndex);
 
-            code = code.replaceFirst(toBeReplaced, "");
+            insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
         }
-        if(code.indexOf(">:", i) == i) {
-            int startIndex = code.indexOf(">:", i);
-            int endIndex = code.indexOf(">", i+1);
+        if(insertedCode.indexOf(">:", i) == i) {
+            int startIndex = insertedCode.indexOf(">:", i);
+            int endIndex = insertedCode.indexOf(">", i+1);
             String replacement = "";
-            String toBeReplaced = code.substring(startIndex+1, endIndex);
+            String toBeReplaced = insertedCode.substring(startIndex+1, endIndex);
 
-            code = code.replaceFirst(toBeReplaced, "");
+            insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
         }
 
     }
-    static void checkPrint(int i){
-        if(code.indexOf("print<", i) == i){
+    static void checkPrint(int i, String insertedCode){
+        if(insertedCode.indexOf("print<", i) == i){
             if(debug){
                 System.out.println("DEBUG: print detected");
             }
 
 
-            int index = code.indexOf("print", i);
+            int index = insertedCode.indexOf("print", i);
 
 
                 if(debug)
@@ -103,24 +103,24 @@ public class Main {
                 String toPrint = "";
                 int tempIndex = index + 4;
                 toPrint="";
-                while (code.charAt(tempIndex+1) != '>'){
+                while (insertedCode.charAt(tempIndex+1) != '>'){
 
                     tempIndex++;
-                    toPrint += code.charAt(tempIndex);
+                    toPrint += insertedCode.charAt(tempIndex);
 
                 }
                 toPrint = toPrint.substring(1)  ;
                 System.out.print(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
             }
         }
-    static void checkPrintLine(int i){
-        if(code.indexOf("println<", i) == i){
+    static void checkPrintLine(int i, String insertedCode){
+        if(insertedCode.indexOf("println<", i) == i){
             if(debug){
                 System.out.println("DEBUG: println detected");
             }
 
 
-            int index = code.indexOf("println", i);
+            int index = insertedCode.indexOf("println", i);
 
 
             if(debug)
@@ -128,24 +128,24 @@ public class Main {
             String toPrint = "";
             int tempIndex = index + 6;
             toPrint="";
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                toPrint += code.charAt(tempIndex);
+                toPrint += insertedCode.charAt(tempIndex);
 
             }
             toPrint = toPrint.substring(1);
             System.out.println(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
         }
     }
-    static void checkPrintInt(int i){
-        if(code.indexOf("printInt<", i) == i){
+    static void checkPrintInt(int i, String insertedCode){
+        if(insertedCode.indexOf("printInt<", i) == i){
             if(debug){
                 System.out.println("DEBUG: printInt detected");
             }
 
 
-            int index = code.indexOf("printInt", i);
+            int index = insertedCode.indexOf("printInt", i);
 
 
             if(debug)
@@ -153,10 +153,10 @@ public class Main {
             String toPrint = "";
             int tempIndex = index + 8;
             toPrint="";
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                toPrint += code.charAt(tempIndex);
+                toPrint += insertedCode.charAt(tempIndex);
                 if (debug)
                     System.out.println("DEBUG: toPrint: "+toPrint);
 
@@ -167,14 +167,14 @@ public class Main {
             System.out.print(intVariables.get(toPrint));
         }
     }
-    static void defInt(int i){
-        if(code.indexOf("integer<", i) == i){
+    static void defInt(int i, String insertedCode){
+        if(insertedCode.indexOf("integer<", i) == i){
             if(debug){
                 System.out.println("DEBUG: integer: detected");
             }
 
 
-            int index = code.indexOf("int", i);
+            int index = insertedCode.indexOf("int", i);
 
 
 
@@ -183,15 +183,15 @@ public class Main {
                 int tempIndex = index + 7;
                 String varName = "";
 
-                while (code.charAt(tempIndex+1) != ':'){
+                while (insertedCode.charAt(tempIndex+1) != ':'){
 
                     tempIndex++;
-                    varName += code.charAt(tempIndex);
+                    varName += insertedCode.charAt(tempIndex);
 
                 }
-                while (code.charAt(tempIndex+1) != '>' ){
+                while (insertedCode.charAt(tempIndex+1) != '>' ){
                     tempIndex++;
-                    toSetStr += code.charAt(tempIndex);
+                    toSetStr += insertedCode.charAt(tempIndex);
                     toSetStr=toSetStr.replace(':', '0');
                 }
                 if(debug)
@@ -201,11 +201,11 @@ public class Main {
                     System.out.println("DEBUG: Value of "+varName+" = "+intVariables.get(varName));
             }
     }
-    static void foreverCheck(int i) {
-        if(code.indexOf("forever<", i) == i){
+    static void foreverCheck(int i, String insertedCode) {
+        if(insertedCode.indexOf("forever<", i) == i){
             if(debug)
                 System.out.println("DEBUG: forever detected");
-            int index = code.indexOf("forever", i);
+            int index = insertedCode.indexOf("forever", i);
 
 
             if(debug)
@@ -213,10 +213,10 @@ public class Main {
             String toPrint = "";
             int tempIndex = index + 6;
             toPrint="";
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                toPrint += code.charAt(tempIndex);
+                toPrint += insertedCode.charAt(tempIndex);
 
             }
             long whileCounter = -9223372036854775807L;
@@ -224,12 +224,17 @@ public class Main {
                 whileCounter++;
                 if (debug)
                     System.out.println("DEBUG: forever-loop iteration number " +whileCounter);
-                for (int ind = 0; ind < code.length(); ind++) {
-                    checkPrint(ind);
-                    checkPrintLine(ind);
-                    checkPrintInt(ind);
-                    defInt(ind);
-                    addCheck(ind);
+                for (int ind = 0; ind < insertedCode.length(); ind++) {
+
+                    checkPrint(0, code);
+                    checkPrintLine(0, code);
+                    checkPrintInt(0, code);
+                    defInt(0, code);
+                    addCheck(0, code);
+                    helpCheck(0, code);
+                    openInBrowserCheck(0, code);
+                    ynInputCheck(0, code);
+                    funcCheck(0, code);
                 }
                 try {
                     TimeUnit.MILLISECONDS.sleep(2L);
@@ -239,24 +244,24 @@ public class Main {
 
             }
     }} //basically finished (could make infinite)
-    static void helpCheck(int i){
-        if(code.indexOf("help<>", i) == i){
+    static void helpCheck(int i, String insertedCode){
+        if(insertedCode.indexOf("help<>", i) == i){
             System.out.println("Help coming soon");
         }
     }//
-    static void openInBrowserCheck(int i){
-        if(code.indexOf("openInBrowser<", i) == i){
+    static void openInBrowserCheck(int i, String insertedCode){
+        if(insertedCode.indexOf("openInBrowser<", i) == i){
             if(debug){
                 System.out.println("DEBUG: openInBrowser detected");
             }
-            int index = code.indexOf("openInBrowser", i);
+            int index = insertedCode.indexOf("openInBrowser", i);
             String toPrint = "";
             int tempIndex = index + 12;
             toPrint="";
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                toPrint += code.charAt(tempIndex);
+                toPrint += insertedCode.charAt(tempIndex);
 
             }
             toPrint = toPrint.substring(1)  ;
@@ -299,22 +304,22 @@ public class Main {
             }
         }
     }
-    static void useCheck(int i){
+    static void useCheck(int i, String insertedCode){
 
-        if(code.indexOf("use<", i) == i){
+        if(insertedCode.indexOf("use<", i) == i){
 
 
-            int index = code.indexOf("use", i);
+            int index = insertedCode.indexOf("use", i);
 
 
 
             String toPrint = "";
             int tempIndex = index + 2;
             toPrint="";
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                toPrint += code.charAt(tempIndex);
+                toPrint += insertedCode.charAt(tempIndex);
 
             }
             toPrint = toPrint.substring(1).replaceAll("ޝ", ">");
@@ -332,9 +337,9 @@ public class Main {
             }
 
     }}
-    static void addCheck(int i){
-        if(code.indexOf("add<", i) == i){
-            int index = code.indexOf("add<", i);
+    static void addCheck(int i, String insertedCode){
+        if(insertedCode.indexOf("add<", i) == i){
+            int index = insertedCode.indexOf("add<", i);
             String option1 = "";
             String option2 = "";
             String option3 = "";
@@ -342,39 +347,39 @@ public class Main {
             String toSetStr = "";
             int tempIndex = index + 4;
 
-            while (code.charAt(tempIndex+1) != ':'){
+            while (insertedCode.charAt(tempIndex+1) != ':'){
 
                 tempIndex++;
-                option1 += code.charAt(tempIndex);
+                option1 += insertedCode.charAt(tempIndex);
                 if(debug){
                     System.out.println("DEBUG: "+option3);
                     System.out.println(tempIndex);
                 }
 
             }
-            while (code.charAt(tempIndex+1) != ':'){
+            while (insertedCode.charAt(tempIndex+1) != ':'){
 
                 tempIndex++;
-                option2 += code.charAt(tempIndex);
+                option2 += insertedCode.charAt(tempIndex);
                 if(debug){
                     System.out.println("DEBUG: "+option3);
                     System.out.println(tempIndex);
                 }
             }
-            while (code.charAt(tempIndex+1) != ':'){
+            while (insertedCode.charAt(tempIndex+1) != ':'){
 
                 tempIndex++;
-                option3 += code.charAt(tempIndex);
+                option3 += insertedCode.charAt(tempIndex);
                 if(debug){
                     System.out.println("DEBUG: "+option3);
                     System.out.println(tempIndex);
                 }
 
             }
-            while (code.charAt(tempIndex+1) != '>'){
+            while (insertedCode.charAt(tempIndex+1) != '>'){
 
                 tempIndex++;
-                option4 += code.charAt(tempIndex);
+                option4 += insertedCode.charAt(tempIndex);
                 if(debug){
                     System.out.println("DEBUG: "+option3);
                     System.out.println("DEBUG: "+   tempIndex);
@@ -382,36 +387,36 @@ public class Main {
             }
             if(debug)
                 System.out.println(option1 + " "+option2+ " " +option3+ " "+option4);
-            while (code.charAt(tempIndex+1) != '>' ){
+            while (insertedCode.charAt(tempIndex+1) != '>' ){
                 tempIndex++;
-                toSetStr += code.charAt(tempIndex);
+                toSetStr += insertedCode.charAt(tempIndex);
                 toSetStr=toSetStr.replace(':', '0');
             }
 
         }
     }
-    static void ynInputCheck(int i) {
-        if (code.indexOf("yesNo<", i) == i) {
+    static void ynInputCheck(int i, String insertedCode) {
+        if (insertedCode.indexOf("yesNo<", i) == i) {
             if(debug)
                 System.out.println("DEBUG: yesNo<> detected");
 
-            int index = code.indexOf("yesNo", i);
+            int index = insertedCode.indexOf("yesNo", i);
 
 
-            //read code
+            //read insertedCode
             String ifYes = "";
             int tempIndex = index + 5;
             String ifNo = "";
 
-            while (code.charAt(tempIndex + 1) != ':') {
+            while (insertedCode.charAt(tempIndex + 1) != ':') {
 
                 tempIndex++;
-                ifYes += code.charAt(tempIndex);
+                ifYes += insertedCode.charAt(tempIndex);
 
             }
-            while (code.charAt(tempIndex + 1) != '>') {
+            while (insertedCode.charAt(tempIndex + 1) != '>') {
                 tempIndex++;
-                ifNo += code.charAt(tempIndex);
+                ifNo += insertedCode.charAt(tempIndex);
                 ifNo = ifNo.replaceFirst(":", "");
             }
             ifNo = ifNo+ ">";
@@ -420,22 +425,22 @@ public class Main {
             String choise = sc.nextLine();
             if (choise.equals("Y") || choise.equals("y") || choise.equals("yes") || choise.equals("Yes") || choise.equals("YEs") || choise.equals("YES") || choise.equals("yEs") || choise.equals("yES") || choise.equals("yeS")) {
                 for (int ind = 0; ind < ifYes.length()+5; ind++) {
-                    useCheck(0);
+                    useCheck(0, code);
                     if (debug)
                         System.out.println("DEBUG: character: " + i);
                     if (debug)
                         System.out.println();
-                    checkPrint(0);
-                    checkPrintLine(0);
-                    checkPrintInt(0);
-                    defInt(0);
-                    addCheck(0);
-                    helpCheck(0);
-                    foreverCheck(0);
-                    openInBrowserCheck(0);
+                    checkPrint(0, code);
+                    checkPrintLine(0, code);
+                    checkPrintInt(0, code);
+                    defInt(0, code);
+                    addCheck(0, code);
+                    helpCheck(0, code);
+                    foreverCheck(0, code);
+                    openInBrowserCheck(0, code);
 
                     //delete character
-                    code = code.substring(1);
+                    insertedCode = insertedCode.substring(1);
 
 
 
@@ -443,47 +448,47 @@ public class Main {
                     }
                 }
          else if(choise.equals("n") || choise.equals("N")|| choise.equals("no")|| choise.equals("NO")|| choise.equals("nO")){
-        code = code.replaceFirst(ifYes, "");
+        insertedCode = insertedCode.replaceFirst(ifYes, "");
         for (int ind = 0; ind < ifYes.length()+6; ind++) {
-            useCheck(0);
+            useCheck(0, code);
             if (debug)
                 System.out.println("DEBUG: character: " + i);
             if (debug)
                 System.out.println();
-            checkPrint(0);
-            checkPrintLine(0);
-            checkPrintInt(0);
-            defInt(0);
-            addCheck(0);
-            helpCheck(0);
-            foreverCheck(0);
-            openInBrowserCheck(0);
+            checkPrint(0, code);
+            checkPrintLine(0, code);
+            checkPrintInt(0, code);
+            defInt(0, code);
+            addCheck(0, code);
+            helpCheck(0, code);
+            foreverCheck(0, code);
+            openInBrowserCheck(0, code);
 
             //delete character
-            code = code.substring(1);
+            insertedCode = insertedCode.substring(1);
         }
 }}}
-    static void funcCheck(int i){
-        if (code.indexOf("func<", i) == i) {
+    static void funcCheck(int i, String insertedCode){
+        if (insertedCode.indexOf("func<", i) == i) {
             System.out.println("func");
-            int index = code.indexOf("func", i);
+            int index = insertedCode.indexOf("func", i);
             String name = "";
             int tempIndex = index + 4;
-            String execCode =  "";
+            String execinsertedCode =  "";
 
-            while (code.charAt(tempIndex + 1) != ':') {
+            while (insertedCode.charAt(tempIndex + 1) != ':') {
 
                 tempIndex++;
-                name += code.charAt(tempIndex);
+                name += insertedCode.charAt(tempIndex);
 
             }
-            while (code.charAt(tempIndex) != '>') {
+            while (insertedCode.charAt(tempIndex) != '>') {
                 tempIndex++;
-                execCode += code.charAt(tempIndex);
+                execinsertedCode += insertedCode.charAt(tempIndex);
 
             }
-            execCode = execCode.replaceFirst(":", "");
-            functions.put(name, execCode);
+            execinsertedCode = execinsertedCode.replaceFirst(":", "");
+            functions.put(name, execinsertedCode);
         }
     }
 
