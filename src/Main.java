@@ -519,7 +519,6 @@ public class Main {
             toPrint = toPrint.substring(1);
             String codeToUse = functions.get(toPrint);
             System.out.println(codeToUse);
-            codeToUse="print<DEBUG: test>";
             for (int ind = 0; i < codeToUse.length(); i++) {
             useCheck(0, codeToUse);
             if (debug)
