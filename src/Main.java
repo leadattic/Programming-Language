@@ -258,7 +258,11 @@ public class Main {
     }} //basically finished (could make infinite)
     static void helpCheck(int i, String insertedCode){
         if(insertedCode.indexOf("help<>", i) == i){
-            System.out.println("Help coming soon");
+            System.out.println("What do you want help with? ");
+            System.out.println("a : everything | 1 : how to create a Hello World program" +
+                    "");
+            String choise = sc.nextLine();
+
         }
     }//
     static void openInBrowserCheck(int i, String insertedCode){
