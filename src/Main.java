@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-//TODO use<> command (basically like import)
-//TODO help<> command
+
+//TODO random<> (use<>)
+
 public class Main {
 
 
@@ -73,6 +74,7 @@ public class Main {
         }
 
     static void clearArrows(int i, String insertedCode){
+
         if(insertedCode.indexOf("<", i) == i) {
             int startIndex = insertedCode.indexOf("<", i);
             int endIndex = insertedCode.indexOf(">", i);
@@ -89,17 +91,10 @@ public class Main {
 
             insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
         }
-        if(insertedCode.indexOf(":", i) == i) {
-            int startIndex = insertedCode.indexOf(":", i);
-            int endIndex = insertedCode.indexOf(">", i+1);
-            String replacement = "";
-            String toBeReplaced = insertedCode.substring(startIndex+1, endIndex);
-
-            insertedCode = insertedCode.replaceFirst(toBeReplaced, "");
-        }
 
 
-    }
+    }// TODO fix clearArrows()
+
     static void checkPrint(int i, String insertedCode){
         if(insertedCode.indexOf("print<", i) == i){
             if(debug){
@@ -125,6 +120,7 @@ public class Main {
                 System.out.print(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
             }
         }
+
     static void checkPrintLine(int i, String insertedCode){
         if(insertedCode.indexOf("println<", i) == i){
             if(debug){
@@ -150,6 +146,7 @@ public class Main {
             System.out.println(toPrint.replaceAll("@nl", "\n").replaceAll("ޝ", ">"));
         }
     }
+
     static void checkPrintInt(int i, String insertedCode){
         if(insertedCode.indexOf("printInt<", i) == i){
             if(debug){
@@ -179,6 +176,7 @@ public class Main {
             System.out.print(intVariables.get(toPrint));
         }
     }
+
     static void defInt(int i, String insertedCode){
         if(insertedCode.indexOf("integer<", i) == i){
             if(debug){
@@ -213,6 +211,7 @@ public class Main {
                     System.out.println("DEBUG: Value of "+varName+" = "+intVariables.get(varName));
             }
     }
+
     static void foreverCheck(int i, String insertedCode) {
         if(insertedCode.indexOf("forever<", i) == i){
             if(debug)
@@ -256,15 +255,17 @@ public class Main {
 
             }
     }} //basically finished (could make infinite)
+
     static void helpCheck(int i, String insertedCode){
         if(insertedCode.indexOf("help<>", i) == i){
             System.out.println("What do you want help with? ");
-            System.out.println("a : everything | 1 : how to create a Hello World program" +
+            System.out.println("a : everything" +
                     "");
             String choise = sc.nextLine();
 
         }
-    }//
+    }// TODO helpCheck()
+
     static void openInBrowserCheck(int i, String insertedCode){
         if(insertedCode.indexOf("openInBrowser<", i) == i){
             if(debug){
@@ -320,6 +321,7 @@ public class Main {
             }
         }
     }
+
     static void useCheck(int i, String insertedCode){
 
         if(insertedCode.indexOf("use<", i) == i){
@@ -352,7 +354,8 @@ public class Main {
                 System.out.println("ERROR: use argument is not a valid option");
             }
 
-    }}
+    }}//TODO use<> command
+
     static void addCheck(int i, String insertedCode){
         if(insertedCode.indexOf("add<", i) == i){
             int index = insertedCode.indexOf("add<", i);
@@ -411,6 +414,7 @@ public class Main {
 
         }
     }
+
     static void ynInputCheck(int i, String insertedCode) {
         if (insertedCode.indexOf("yesNo<", i) == i) {
             if(debug)
@@ -484,7 +488,9 @@ public class Main {
             insertedCode = insertedCode.substring(1);
         }
 }}}
+
     static void funcCheck(int i, String insertedCode){
+
         if (insertedCode.indexOf("func<", i) == i) {
 
             int index = insertedCode.indexOf("func", i);
@@ -507,6 +513,7 @@ public class Main {
             functions.put(name, execinsertedCode);
         }
     }
+
     static void doCheck(int i, String insertedCode){
         if(insertedCode.indexOf("do<", i) == i){
 
@@ -544,6 +551,7 @@ public class Main {
             
         }}
     }
+
 
 }
 
